@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\Pokemon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Session;
 
 class PokemonController extends Controller
 {
@@ -51,9 +53,8 @@ class PokemonController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
      */
-    public function update(Request $request, int $id): Response
+    public function update(Request $request, int $id)
     {
         $pokemon = Pokemon::find($id);
         $pokemon->identifier = $request->input('name');
@@ -62,6 +63,10 @@ class PokemonController extends Controller
         $pokemon->weight = $request->input('weight');
         $pokemon->base_experience = $request->input('base_experience');
         $pokemon->save();
+
+        Session::flash('message', 'Pokemon has successfully updated.');
+
+        return redirect()->back();
     }
 
     /**

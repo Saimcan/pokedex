@@ -1,5 +1,26 @@
 @extends('layouts.app')
 
+<div class="md:container md:mx-auto">
+    <h3 class="font-medium leading-tight text-5xl mt-0 mb-2 text-black text-center">&nbsp;</h3>
+</div>
+
+@section('messages')
+    @if(\Illuminate\Support\Facades\Session::has('message'))
+        <div class="md:container md:mx-auto">
+            <div class="p-10 flex flex-col gap-5 items-center">
+                <div class="flex bg-white flex-row shadow-md border border-gray-100 rounded-lg overflow-hidden md:w-5/12">
+                    <div class="flex w-3 bg-gradient-to-t from-green-500 to-green-400"></div>
+                    <div class="flex-1 p-3">
+                        <h1 class="md:text-xl text-gray-600">Success</h1>
+                        <p class="text-gray-400 text-xs md:text-sm font-light">{{ \Illuminate\Support\Facades\Session::get('message') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+    @endif
+@endsection
+
 @section('header')
     <div class="md:container md:mx-auto">
         <h3 class="font-medium leading-tight text-5xl mt-0 mb-2 text-black text-center">&nbsp;</h3>
@@ -11,12 +32,12 @@
         <div class="block p-6 rounded-lg shadow-lg bg-white max-w-sm">
             <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2 text-center">{{ ucfirst($pokemon->identifier) }}</h5>
 
-                <form action="/{{ $pokemon->id }}" method="PATCH">
+                <form action="/{{ $pokemon->id }}" method="POST">
                     @csrf
-                    @method('patch')
+                    @method('PATCH')
                     <div class="form-group mb-6">
                         <label for="identifier" class="form-label inline-block mb-2 text-gray-700">Name</label>
-                        <input type="text" class="form-control
+                        <input name="name" type="text" class="form-control
         block
         w-full
         px-3
@@ -36,7 +57,7 @@
 
                     <div class="form-group mb-6">
                         <label for="species_id" class="form-label inline-block mb-2 text-gray-700">Species ID</label>
-                        <input type="text" class="form-control block
+                        <input name="species_id" type="text" class="form-control block
         w-full
         px-3
         py-1.5
@@ -55,7 +76,7 @@
 
                     <div class="form-group mb-6">
                         <label for="height" class="form-label inline-block mb-2 text-gray-700">Height</label>
-                        <input type="text" class="form-control block
+                        <input name="height" type="text" class="form-control block
         w-full
         px-3
         py-1.5
@@ -74,7 +95,7 @@
 
                     <div class="form-group mb-6">
                         <label for="height" class="form-label inline-block mb-2 text-gray-700">Weight</label>
-                        <input type="text" class="form-control block
+                        <input name="weight" type="text" class="form-control block
         w-full
         px-3
         py-1.5
@@ -93,7 +114,7 @@
 
                     <div class="form-group mb-6">
                         <label for="base_experience" class="form-label inline-block mb-2 text-gray-700">Base Experience</label>
-                        <input type="text" class="form-control block
+                        <input name="base_experience" type="text" class="form-control block
         w-full
         px-3
         py-1.5
