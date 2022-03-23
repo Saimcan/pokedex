@@ -1,64 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Pokedex
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+----------
 
-## About Laravel
+Pokedex project consist of two modules: Application and API.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+In application, you can view all pokemons, go to detail page, edit details and update.
+In API, you can list all pokemons or call a specific pokemon by it's ID.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project's functionality is complete, PRs and issues welcome.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+----------
 
-## Learning Laravel
+# Getting started
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Please check the official laravel installation guide for server requirements before you start. [Official Documentation](https://laravel.com/docs/5.4/installation#installation)
 
-## Laravel Sponsors
+Alternative installation is possible without local dependencies relying on [Docker](#docker).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Clone the repository
 
-### Premium Partners
+    git clone https://github.com/Saimcan/pokedex.git
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Switch to the repo folder
 
-## Contributing
+    cd pokedex
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Install all the dependencies using composer
 
-## Code of Conduct
+    composer install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Run the database migrations (**Set the database connections in .env before migrating**)
 
-## Security Vulnerabilities
+    php artisan migrate
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Seed database with using pokemons.csv
 
-## License
+    php artisan db:seed --class=PokemonSeeder
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Seed users table by creating a test user to use API
+
+    sail php artisan db:seed --class=CreateUser
+
+Install npm dependencies
+
+    npm run install
+    npm run build
+
+Start the local development server
+
+    php artisan serve
+
+You can now access the server at http://localhost on your browser. The root folder will list all the pokemons.
+
+## API Specification
+
+Once all migrations and seeding are complete, you can use following links for api:
+
+- `http://localhost/api/pokemons` - returns all pokemons
+- `http://localhost/api/pokemons/<id>` - returns the specific pokemon called by ID
+
+----------
+
+# Code overview
+
+## Dependencies
+
+- [tailwind.css](https://github.com/tailwindlabs/tailwindcss) - A frontend library
+- [tailwind elements](https://github.com/mdbootstrap/Tailwind-Elements) - A frontend library created with tailwind.css and twitter bootstrap
+
+## Folders
+
+- `app/Http/Models` - Contains all the Eloquent models
+- `app/Http/Controllers/ApiControllers` - Contains all the api controllers
+- `app/Http/Controllers/WebControllers` - Contains all the web controllers
+- `app/Http/Middleware` - Contains the Basic Auth (Http) Middleware (AuthBasic.php)
+- `config` - Contains all the application configuration files
+- `database/data_files` - Contains pokemon.csv downloaded from https://github.com/veekun/pokedex/blob/master/pokedex/data/csv/pokemon.csv
+- `database/migrations` - Contains all the database migrations
+- `database/seeds` - Contains the database seeders
+- `routes` - Contains all the api and web routes (api.php, web.php)
+- `resources/css` - Contains non-compiled css
+- `resources/js` - Contains non-compiled js
+- `resources/views` - Contains the base layout and the other views based on app.blade.php layout
+
+----------
+
+# Testing API
+
+Run the laravel development server
+
+    php artisan serve
+
+The api can now be accessed at
+
+    http://localhost/api/pokemons
+    http://localhost/api/pokemons/<id>
+
+Request headers
+
+| **Required** 	| **Key**              	| **Value**            	|
+|----------	|------------------	|------------------	|
+| Yes      	| Content-Type     	| application/json 	|
+| Yes      	| X-Requested-With 	| XMLHttpRequest   	|
+| Yes   	| Authorization    	| HTTP Basic Auth  	|
+
+You can use test@example.com as user, test123 for password. Don't forget to select basic auth type on authorization tab if you're using postman as a testing platform. Without credentials you won't be able to get any data from API.
+
+----------
