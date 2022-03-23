@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\WebControllers\PokedexController;
+use App\Http\Controllers\WebControllers\PokemonController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Deleted default root route.
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+//Route::resource('/', PokedexController::class);
+
+Route::get('/', [PokedexController::class, 'index']);
+
+Route::get('/{pokemonId}', [PokemonController::class, 'show']);
+Route::get('/{pokemonId}/edit', [PokemonController::class, 'edit']);
+Route::patch('/{pokemonId}', [PokemonController::class, 'update']);
