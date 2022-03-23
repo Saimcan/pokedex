@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PokedexController;
-use App\Http\Controllers\PokemonController;
+use App\Http\Controllers\WebControllers\PokedexController;
+use App\Http\Controllers\WebControllers\PokemonController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

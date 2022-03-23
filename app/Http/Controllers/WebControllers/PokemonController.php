@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\Controller;
 use App\Models\Pokemon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
